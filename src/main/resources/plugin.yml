@@ -1,0 +1,4 @@
+name: FlyBeacon
+version: ${project.version}
+main: tech.garz.flybeacon.Plugin
+api-version: 1.16
