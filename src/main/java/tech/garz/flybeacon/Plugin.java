@@ -1,12 +1,15 @@
 package tech.garz.flybeacon;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import tech.garz.flybeacon.listeners.BeaconBlockChangeListener;
+import tech.garz.flybeacon.storage.NotificationType;
 import tech.garz.flybeacon.storage.PluginConfig;
 import tech.garz.flybeacon.storage.State;
 
@@ -36,6 +39,13 @@ public final class Plugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player p : getServer().getOnlinePlayers()) {
+            if (p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE) {
+                PluginConfig.sendPlayerNotification(NotificationType.INFO, p, PluginConfig.NOTIFICATION_FLY_DISABLED);
+                p.setAllowFlight(false);
+            }
+        }
+
         if (!crashed) {
             state.save();
         }
