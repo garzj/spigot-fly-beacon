@@ -5,6 +5,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+
 import tech.garz.flybeacon.listeners.BeaconBlockChangeListener;
 import tech.garz.flybeacon.storage.PluginConfig;
 import tech.garz.flybeacon.storage.State;
@@ -12,7 +13,6 @@ import tech.garz.flybeacon.storage.State;
 public final class Plugin extends JavaPlugin {
     private static JavaPlugin plugin;
     private static boolean crashed = false;
-    private static PluginConfig pluginConfig;
     private static State state;
     private static BeaconUpdater beaconUpdater;
     private static BukkitTask beaconUpdaterTask;
@@ -24,7 +24,8 @@ public final class Plugin extends JavaPlugin {
         PluginConfig.loadConfig(plugin);
 
         state = new State();
-        if (crashed) return;
+        if (crashed)
+            return;
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new BeaconBlockChangeListener(), plugin);
@@ -40,12 +41,10 @@ public final class Plugin extends JavaPlugin {
         }
     }
 
-
     public static void onConfigReloaded() {
         beaconUpdaterTask.cancel();
         beaconUpdaterTask = beaconUpdater.runTaskTimer(plugin, 0L, PluginConfig.UPDATE_INTERVAL);
     }
-
 
     public static void disablePlugin() {
         plugin.getPluginLoader().disablePlugin(plugin);
@@ -63,7 +62,6 @@ public final class Plugin extends JavaPlugin {
         crashed = true;
         disablePlugin();
     }
-
 
     public static JavaPlugin getInstance() {
         return plugin;

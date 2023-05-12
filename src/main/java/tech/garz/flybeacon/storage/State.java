@@ -1,18 +1,19 @@
 package tech.garz.flybeacon.storage;
 
-import org.bukkit.Location;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import tech.garz.flybeacon.FlyBeacon;
-import tech.garz.flybeacon.Plugin;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.bukkit.Location;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import tech.garz.flybeacon.FlyBeacon;
+import tech.garz.flybeacon.Plugin;
 
 public class State {
     private final File stateFile;
@@ -30,6 +31,7 @@ public class State {
                 Plugin.crash("Could not create state file: " + stateFile.getPath());
                 return;
             }
+
         }
 
         state = new YamlConfiguration();

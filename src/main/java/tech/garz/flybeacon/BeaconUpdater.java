@@ -1,5 +1,9 @@
 package tech.garz.flybeacon;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -7,11 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import tech.garz.flybeacon.storage.PluginConfig;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import tech.garz.flybeacon.storage.PluginConfig;
 
 public class BeaconUpdater extends BukkitRunnable {
     private HashMap<UUID, Boolean> playersFlying = new HashMap<>();
@@ -20,6 +21,7 @@ public class BeaconUpdater extends BukkitRunnable {
     public void run() {
         ArrayList<FlyBeacon> flyBeacons = Plugin.getState().getFlyBeacons();
         for (FlyBeacon flyBeacon : flyBeacons) {
+
             flyBeacon.updateActiveState();
         }
 
@@ -34,8 +36,10 @@ public class BeaconUpdater extends BukkitRunnable {
             for (FlyBeacon flyBeacon : flyBeacons) {
                 Location beaconLocation = flyBeacon.getLocation();
                 if (flyBeacon.isActive()) {
-                    if (Math.abs(beaconLocation.getBlockX() - playerLocation.getBlockX()) <= PluginConfig.BEACON_RANGE) {
-                        if (Math.abs(beaconLocation.getBlockZ() - playerLocation.getBlockZ()) <= PluginConfig.BEACON_RANGE) {
+                    if (Math.abs(
+                            beaconLocation.getBlockX() - playerLocation.getBlockX()) <= PluginConfig.BEACON_RANGE) {
+                        if (Math.abs(
+                                beaconLocation.getBlockZ() - playerLocation.getBlockZ()) <= PluginConfig.BEACON_RANGE) {
                             inBeaconRange = true;
                         }
                     }
@@ -55,7 +59,8 @@ public class BeaconUpdater extends BukkitRunnable {
 
                 player.setAllowFlight(true);
             } else if (playerFlying) {
-                player.sendMessage(ChatColor.RED + "Updating fly mode in " + (PluginConfig.UPDATE_INTERVAL) + " ticks...");
+                player.sendMessage(
+                        ChatColor.RED + "Updating fly mode in " + (PluginConfig.UPDATE_INTERVAL) + " ticks...");
                 playersFlying.put(uuid, false);
             } else {
                 if (wasInRange) {

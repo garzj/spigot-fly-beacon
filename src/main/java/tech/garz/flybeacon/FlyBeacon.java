@@ -2,6 +2,7 @@ package tech.garz.flybeacon;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+
 import tech.garz.flybeacon.storage.PluginConfig;
 
 public class FlyBeacon {
@@ -10,7 +11,8 @@ public class FlyBeacon {
 
     public FlyBeacon(String s) throws IllegalArgumentException {
         String[] parts = s.split("(?<!\\\\)\\|");
-        if (parts.length != 5) throw new IllegalArgumentException();
+        if (parts.length != 5)
+            throw new IllegalArgumentException();
 
         World world = Plugin.getInstance().getServer().getWorld(parts[0].replace("\\|", "|"));
         int x, y, z;
@@ -33,7 +35,8 @@ public class FlyBeacon {
 
     public String toString() {
         String world = location.getWorld().getName().replace("|", "\\|");
-        return world + "|" + location.getBlockX() + "|" + location.getBlockY() + "|" + location.getBlockZ() + "|" + active;
+        return world + "|" + location.getBlockX() + "|" + location.getBlockY() + "|" + location.getBlockZ() + "|"
+                + active;
     }
 
     public Location getLocation() {
@@ -46,14 +49,17 @@ public class FlyBeacon {
 
     public void updateActiveState() {
         World world = location.getWorld();
-        if (world == null) return;
-        if (!world.isChunkLoaded(location.getBlockX() / 16, location.getBlockZ() / 16)) return;
+        if (world == null)
+            return;
+        if (!world.isChunkLoaded(location.getBlockX() / 16, location.getBlockZ() / 16))
+            return;
 
         active = true;
         for (int i = 0; active && i < PluginConfig.MINIMUM_TIER; i++) {
             for (int x = location.getBlockX() - (i + 1); active && x <= location.getBlockX() + (i + 1); x++) {
                 for (int z = location.getBlockZ() - (i + 1); active && z <= location.getBlockZ() + (i + 1); z++) {
-                    if (world.getBlockAt(x, location.getBlockY() - (i + 1), z).getType() != PluginConfig.MINERAL_BLOCK) {
+                    if (world.getBlockAt(x, location.getBlockY() - (i + 1), z)
+                            .getType() != PluginConfig.MINERAL_BLOCK) {
                         active = false;
                     }
                 }

@@ -3,6 +3,7 @@ package tech.garz.flybeacon.storage;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import tech.garz.flybeacon.Plugin;
 
 public class PluginConfig {
