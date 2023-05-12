@@ -1,0 +1,11 @@
+# The range of the beacon
+beacon-range: 42
+
+# The minimum number of layers beneath the beacon, also called tier
+minimum-tier: 4
+
+# The block beneath the beacon, use any of https://helpch.at/docs/1.16.5/org/bukkit/Material.html
+mineral-block: DIAMOND_BLOCK
+
+# The interval in which beacons in range are checked for the above criteria
+update-interval: 80
