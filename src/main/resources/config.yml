@@ -9,3 +9,18 @@ mineral-block: DIAMOND_BLOCK
 
 # The interval in which beacons in range are checked for the above criteria
 update-interval: 80
+
+# The events a user gets notified about, one of
+# - ALL:  All notifications, combining INFO and WARN
+# - INFO: Fly mode enabled / disabled
+# - WARN: Beacon out of range
+# - NONE
+notification-type: ALL
+
+# The location, events are displayed, either CHAT or ACTIONBAR
+notification-form: ACTIONBAR
+
+notification-messages:
+  fly-enabled: '§bFly enabled.'
+  out-of-range: '§cBeacon out of range. %t ticks left.'
+  fly-disabled: '§cFly disabled.'

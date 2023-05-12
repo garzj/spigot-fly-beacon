@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,6 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import tech.garz.flybeacon.storage.NotificationType;
 import tech.garz.flybeacon.storage.PluginConfig;
 
 public class BeaconUpdater extends BukkitRunnable {
@@ -51,7 +51,8 @@ public class BeaconUpdater extends BukkitRunnable {
             boolean playerFlying = wasInRange ? playersFlying.get(uuid) : false;
             if (inBeaconRange) {
                 if (!playerFlying) {
-                    player.sendMessage(ChatColor.AQUA + "Fly mode enabled!");
+                    PluginConfig.sendPlayerNotification(NotificationType.INFO, player,
+                            PluginConfig.NOTIFICATION_FLY_ENABLED);
                     playersFlying.put(uuid, true);
 
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 1000, 2, false, false));
@@ -59,12 +60,13 @@ public class BeaconUpdater extends BukkitRunnable {
 
                 player.setAllowFlight(true);
             } else if (playerFlying) {
-                player.sendMessage(
-                        ChatColor.RED + "Updating fly mode in " + (PluginConfig.UPDATE_INTERVAL) + " ticks...");
+                PluginConfig.sendPlayerNotification(NotificationType.WARN, player,
+                        PluginConfig.NOTIFICATION_OUT_OF_RANGE);
                 playersFlying.put(uuid, false);
             } else {
                 if (wasInRange) {
-                    player.sendMessage(ChatColor.RED + "Fly mode disabled!");
+                    PluginConfig.sendPlayerNotification(NotificationType.INFO, player,
+                            PluginConfig.NOTIFICATION_FLY_DISABLED);
                     playersFlying.remove(uuid);
 
                     player.removePotionEffect(PotionEffectType.FAST_DIGGING);
